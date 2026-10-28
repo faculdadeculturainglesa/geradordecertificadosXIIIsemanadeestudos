@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Certificados - XIII Semana de Estudos FCI</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Dancing+Script:wght@600;700&display=swap" 
+        rel="stylesheet">
     <style>
         @media print {
             .no-print { display: none !important; }
@@ -457,3 +458,32 @@
                 `).join('');
                 autocompleteList.classList.remove('hidden');
             }
+
+            gerar();
+        }
+
+        function selecionarSugestao(nome, extra) {
+            inputNome.value = nome;
+            if (modalidadeAtual === 'palestrante' && extra && extra !== "Inscrito FCI") {
+                inputTitulo.value = extra;
+            }
+            autocompleteList.classList.add('hidden');
+            autocompleteList.innerHTML = '';
+            gerar();
+        }
+
+        // Fechar a lista de sugestões ao clicar fora do campo
+        document.addEventListener('click', function(e) {
+            if (!inputNome.contains(e.target) && !autocompleteList.contains(e.target)) {
+                autocompleteList.classList.add('hidden');
+            }
+        });
+
+        // Inicialização automática ao carregar a página
+        window.onload = function() {
+            configurarLogoFixo();
+            gerar();
+        };
+    </script>
+</body>
+</html>
