@@ -46,14 +46,12 @@
             align-items: center;
             justify-content: center;
         }
-        /* Estilo idêntico para a assinatura em texto cursivo */
         .signature-text {
             font-family: 'Dancing Script', cursive;
             font-size: 2.5rem;
             color: #1e293b;
             user-select: none;
         }
-        /* Custom scrollbar para lista de sugestões */
         .custom-scroll::-webkit-scrollbar {
             width: 6px;
         }
@@ -68,17 +66,17 @@
 </head>
 <body class="bg-slate-100 font-['Poppins'] min-h-screen py-8 px-4 flex flex-col justify-between">
 
-    <!-- Painel de Controle (Fiel ao modelo, com suporte a modalidades e autocompletar) -->
+    <!-- Painel de Controle Superior -->
     <div class="no-print max-w-2xl mx-auto w-full bg-white rounded-xl shadow-lg border-t-4 border-red-600 p-6 mb-8 transition-all">
         <div class="flex items-center justify-between mb-2">
             <h1 class="text-xl font-bold text-slate-800">Gerador de Certificado - XIII Semana de Estudos FCI</h1>
             <span class="text-xs font-semibold px-2.5 py-1 bg-red-100 text-red-700 rounded-full">FCI 2026</span>
         </div>
         <p class="text-xs md:text-sm text-slate-500 mb-4 font-semibold">
-            ✨ Selecione a modalidade, digite o nome completo e clique em <b>Gerar Certificado</b> ou <b>Imprimir / Salvar PDF</b>.
+             Selecione a modalidade, digite o nome completo e clique em <b>Gerar Certificado</b> ou <b>Imprimir / Salvar PDF</b>.
         </p>
 
-        <!-- Seletor de Modalidade (Participante, Palestrante, Monitoria) -->
+        <!-- Seletor de Modalidade -->
         <div class="grid grid-cols-3 gap-2 mb-4 bg-slate-50 p-1.5 rounded-lg border border-slate-200">
             <button 
                 type="button"
@@ -122,7 +120,7 @@
             <div id="autocompleteList" class="hidden absolute z-30 left-0 right-0 mt-1 max-h-48 bg-white border border-slate-200 rounded-lg shadow-xl overflow-y-auto custom-scroll text-sm"></div>
         </div>
 
-        <!-- Campo adicional para Palestrante (Título da Apresentação / Palestra) -->
+        <!-- Campo adicional para Palestrante -->
         <div id="campoTituloPalestra" class="hidden mb-3">
             <label for="tituloTrabalho" class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
                 Título da Palestra ou Trabalho Apresentado
@@ -152,7 +150,7 @@
             >
         </div>
 
-        <!-- Botões de Ação Idênticos aos Modelos Fornecidos -->
+        <!-- Botões de Ação -->
         <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
             <button onclick="gerar()" class="bg-slate-800 text-white px-6 py-2.5 rounded-lg hover:bg-slate-900 active:scale-95 transition text-sm font-medium">
                 Gerar Certificado
@@ -164,30 +162,28 @@
         </div>
     </div>
 
-    <!-- Área Oficial do Certificado (Fiel aos arquivos certificadoparticipantes.html, certificadopalestrante.html e certificado_monitores.html) -->
+    <!-- Área Oficial do Certificado -->
     <div class="w-full flex justify-center items-center pb-8">
         <div id="printable-area" class="w-full max-w-[1000px] mx-auto p-1 bg-white shadow-2xl relative transition-all">
             <div class="border-8 border-slate-800 p-10 sm:p-12 relative min-h-[640px] flex flex-col justify-between">
                 
-                <!-- Background Pattern idêntico ao modelo (.cert-bg) -->
+                <!-- Background Pattern -->
                 <div class="absolute inset-0 cert-bg pointer-events-none"></div>
                 
                 <div class="relative z-10 text-center flex-1 flex flex-col justify-between">
                     
                     <!-- Topo Institucional -->
                     <div>
-                        <!-- Espaço do Logotipo / Imagem Institucional Fixa no Código -->
+                        <!-- Logotipo com fallback automático para GitHub e CDN -->
                         <div class="flex justify-center mb-5 min-h-[56px] items-center">
                             <div id="containerLogo">
-                                <!-- Coloque o link direto da imagem no GitHub no atributo 'src' abaixo -->
                                 <img 
                                     id="logoImagem" 
-                                    src="logo.jpg" 
+                                    src="fci-logo.jpeg" 
                                     alt="Logo Faculdade Cultura Inglesa" 
                                     class="max-h-20 max-w-[240px] object-contain mx-auto"
                                     onerror="tratarErroImagem()"
                                 >
-                                <!-- Fallback automático caso a imagem ainda não exista no repositório -->
                                 <div id="logoBadgePadrao" class="hidden bg-red-600 text-white p-3 rounded-lg font-bold text-2xl shadow-sm">
                                     FCI
                                 </div>
@@ -196,7 +192,7 @@
 
                         <h2 class="text-slate-500 uppercase tracking-[0.3em] text-xs sm:text-sm font-bold mb-2">Faculdade Cultura Inglesa</h2>
                         
-                        <!-- Título do Certificado Dinâmico (Participação / Palestrante / Monitoria) -->
+                        <!-- Título do Certificado Dinâmico -->
                         <h1 id="displayTituloCertificado" class="font-['Playfair_Display'] text-3xl sm:text-4xl text-slate-800 mb-8 italic">
                             Certificado de Participação
                         </h1>
@@ -218,7 +214,7 @@
                         </p>
                     </div>
 
-                    <!-- Bloco da Assinatura e Data de Emissão (Seguindo a estrutura dos modelos) -->
+                    <!-- Assinatura e Data de Emissão -->
                     <div class="mt-8">
                         <div class="flex justify-center">
                             <div class="text-center w-80">
@@ -241,123 +237,42 @@
         </div>
     </div>
 
-    <!-- Scripts com Banco de Dados e Lógica de Atualização -->
     <script>
-        // CONFIGURAÇÃO DO LOGOTIPO:
-        // Caso esteja na mesma pasta do repositório no GitHub: use "logo.jpg"
-        // Ou coloque o link completo raw: "https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPO/main/logo.jpg"
-        const LOGO_SRC = "logo.jpg";
+        const URLs_LOGO = [
+            "fci-logo.jpeg",
+            "https://raw.githubusercontent.com/faculdadeculturainglesa/geradordecertificadosXIIIsemanadeestudos/main/fci-logo.jpeg",
+            "https://cdn.jsdelivr.net/gh/faculdadeculturainglesa/geradordecertificadosXIIIsemanadeestudos@main/fci-logo.jpeg"
+        ];
+        let indiceLogoAtual = 0;
 
-        // Modalidade atual: 'participante' | 'palestrante' | 'monitor'
         let modalidadeAtual = 'participante';
 
-        // Base de dados extraída diretamente da planilha e programação da XIII Semana de Estudos
         const baseDados = {
             participantes: [
-                "Juliana Maria de Souza",
-                "Giullia Della Noce Pereira Machado",
-                "Ketlyn Pinheiro Rodrigues",
-                "Yasmin Tanaka",
-                "Renata de Macedo",
-                "Rodrigo de Almeida Negruchi",
-                "Leticia Domenequetti Storari",
-                "Gabriel de Oliveira",
-                "Pedro Manoel Pereira Cassani",
-                "Eloísa Ribeiro de Oliveira",
-                "Fernanda Christina Köchert",
-                "Leonardo de Melo Campos",
-                "Anna Beatriz do Rego Barros",
-                "Ariel Fischer Alencar",
-                "Gabriela Florindo Faria",
-                "Simone Cristina Silva Santos",
-                "Regina Borovac",
-                "Amanda Figueiredo",
-                "Beatriz Martins",
-                "Luana Cabral de Lima",
-                "André Cândido Ubriaco de Oliveira",
-                "Marcela Peixoto Souza",
-                "Karin Tanaka",
-                "Clara Blanes Debia",
-                "Ruthnéia Ana da Silva Santos",
-                "Carolina Ruiz de Oliveira",
-                "Vitória Macedo Campos",
-                "Pedro Henrique Martins Roumee",
-                "Amanda Gabriele Pedro Cunha",
-                "Diandra Tomaz Fabiano",
-                "Ana Carolina de Castro Pessoa",
-                "Adriana Belfort Mattos",
-                "Giseli Giardini",
-                "Juliana dos Santos Veiga",
-                "Silvana Koenig",
-                "Jayanne Ferraz V. de Moura",
-                "Christina Gomes Rodrigues",
-                "Andrini Schmawen",
-                "Gabriela Maciel Rodrigues Lourenço",
-                "Paula Rodrigues de Magalhães",
-                "Thammyres Tatiany Ramos dos Anjos",
-                "Talita de Carvalho Moura",
-                "Bárbara Domingues de Oliveira Pavan",
-                "Alexandre Bispo de Sales Freitas",
-                "Mirela Gabrielly Silviano da Silva",
-                "Amanda Schmitz Pagliarini de Moura",
-                "Michelle L. R. dos Reis",
-                "Larissa Siqueira",
-                "Cristiane Marcondes Seixas Cesaroti",
-                "Marina Aguiar de Castro Ramos",
-                "Gabriel Brandão de Oliveira Fonseca Zampieri",
-                "Rodrigo Gomes de Paula",
-                "Ariel Fischer Alencar",
-                "Marlon Ferraresso Beralha",
-                "Tatiana Borges",
-                "Nicolas Magnani Ricci Silva",
-                "Vinicius Eugenio Mattos",
-                "Carolina Melchert Balsani",
-                "Paula Papp Coelho",
-                "Luisa Rechtman",
-                "Nicole Yoo",
-                "Gisele Tinmarte Calegari",
-                "Luciana Brunetti Caleffi",
-                "Agatha Kemylin Miranda de Lima",
-                "Gabriel Cruz Freitas",
-                "Isabella Maia Pinheiro",
-                "Júlia Camille Lima de Freitas",
-                "Fernanda Rafaela Salgado Salles",
-                "Priscilla Rodrigues Victoriano dos Santos",
-                "Maria Lazaregno",
-                "Marcos Barbosa de Almeida Costa",
-                "Ana Carolina Amaral Fenech",
-                "Hyasmin dos Santos Alves",
-                "Luciana Cabral de Lima",
-                "Ana Gabriele Pagotto Correa Dias",
-                "Sophia Trindade de Paiva Oliveira",
-                "Rosana Bertolini",
-                "Gustavo A. de A. Morais",
-                "Flávia Alves de Oliveira",
-                "Midian Rebin",
-                "Mayara Gabaldi Sampaio",
-                "Evelyn dos Santos Matias",
-                "Roberto Ramos Mafe",
-                "Denise Libardi Bertolucci",
-                "Natasha Mattos",
-                "Giovanna Souto Marques",
-                "Alexandre Henrique de Freitas Pelegrino",
-                "Tomás Zeigler",
-                "Júlia Vinagre",
-                "Fernanda Lopes Penna",
-                "José Rogério Fátima Moreira de Sousa",
-                "Aura Alessandra Falo Latino",
-                "Henrique dos Santos",
-                "Eduardo de Freitas Mendes",
-                "Carmine Vitória Simão Lucas",
-                "Luísa Baldo Vidigal",
-                "Estela Fernandes Megan",
-                "Kally Gomes Baldalia Spena",
-                "Juliana de Souza Franco",
-                "Meire Schiavon",
-                "Moises Siqueira Neiva",
-                "Walter Alexandre Borges Curti",
-                "Letícia Alves",
-                "Karoll Amanda Rodrigues da Silva"
+                "Juliana Maria de Souza", "Giullia Della Noce Pereira Machado", "Ketlyn Pinheiro Rodrigues",
+                "Yasmin Tanaka", "Renata de Macedo", "Rodrigo de Almeida Negruchi", "Leticia Domenequetti Storari",
+                "Gabriel de Oliveira", "Pedro Manoel Pereira Cassani", "Eloísa Ribeiro de Oliveira", "Fernanda Christina Köchert",
+                "Leonardo de Melo Campos", "Anna Beatriz do Rego Barros", "Ariel Fischer Alencar", "Gabriela Florindo Faria",
+                "Simone Cristina Silva Santos", "Regina Borovac", "Amanda Figueiredo", "Beatriz Martins", "Luana Cabral de Lima",
+                "André Cândido Ubriaco de Oliveira", "Marcela Peixoto Souza", "Karin Tanaka", "Clara Blanes Debia",
+                "Ruthnéia Ana da Silva Santos", "Carolina Ruiz de Oliveira", "Vitória Macedo Campos", "Pedro Henrique Martins Roumee",
+                "Amanda Gabriele Pedro Cunha", "Diandra Tomaz Fabiano", "Ana Carolina de Castro Pessoa", "Adriana Belfort Mattos",
+                "Giseli Giardini", "Juliana dos Santos Veiga", "Silvana Koenig", "Jayanne Ferraz V. de Moura", "Christina Gomes Rodrigues",
+                "Andrini Schmawen", "Gabriela Maciel Rodrigues Lourenço", "Paula Rodrigues de Magalhães", "Thammyres Tatiany Ramos dos Anjos",
+                "Talita de Carvalho Moura", "Bárbara Domingues de Oliveira Pavan", "Alexandre Bispo de Sales Freitas", "Mirela Gabrielly Silviano da Silva",
+                "Amanda Schmitz Pagliarini de Moura", "Michelle L. R. dos Reis", "Larissa Siqueira", "Cristiane Marcondes Seixas Cesaroti",
+                "Marina Aguiar de Castro Ramos", "Gabriel Brandão de Oliveira Fonseca Zampieri", "Rodrigo Gomes de Paula", "Marlon Ferraresso Beralha",
+                "Tatiana Borges", "Nicolas Magnani Ricci Silva", "Vinicius Eugenio Mattos", "Carolina Melchert Balsani", "Paula Papp Coelho",
+                "Luisa Rechtman", "Nicole Yoo", "Gisele Tinmarte Calegari", "Luciana Brunetti Caleffi", "Agatha Kemylin Miranda de Lima",
+                "Gabriel Cruz Freitas", "Isabella Maia Pinheiro", "Júlia Camille Lima de Freitas", "Fernanda Rafaela Salgado Salles",
+                "Priscilla Rodrigues Victoriano dos Santos", "Maria Lazaregno", "Marcos Barbosa de Almeida Costa", "Ana Carolina Amaral Fenech",
+                "Hyasmin dos Santos Alves", "Luciana Cabral de Lima", "Ana Gabriele Pagotto Correa Dias", "Sophia Trindade de Paiva Oliveira",
+                "Rosana Bertolini", "Gustavo A. de A. Morais", "Flávia Alves de Oliveira", "Midian Rebin", "Mayara Gabaldi Sampaio",
+                "Evelyn dos Santos Matias", "Roberto Ramos Mafe", "Denise Libardi Bertolucci", "Natasha Mattos", "Giovanna Souto Marques",
+                "Alexandre Henrique de Freitas Pelegrino", "Tomás Zeigler", "Júlia Vinagre", "Fernanda Lopes Penna", "José Rogério Fátima Moreira de Sousa",
+                "Aura Alessandra Falo Latino", "Henrique dos Santos", "Eduardo de Freitas Mendes", "Carmine Vitória Simão Lucas",
+                "Luísa Baldo Vidigal", "Estela Fernandes Megan", "Kally Gomes Baldalia Spena", "Juliana de Souza Franco", "Meire Schiavon",
+                "Moises Siqueira Neiva", "Walter Alexandre Borges Curti", "Letícia Alves", "Karoll Amanda Rodrigues da Silva"
             ],
             palestrantes: [
                 { nome: "André Cândido Ubriaco de Oliveira", titulo: "From Corpus Evidence to Classroom Inquiry: Fair Cloze Lab" },
@@ -420,26 +335,26 @@
         const logoImagem = document.getElementById('logoImagem');
 
         function configurarLogoFixo() {
-            if (LOGO_SRC && LOGO_SRC.trim() !== '') {
-                logoImagem.src = LOGO_SRC;
-                logoImagem.classList.remove('hidden');
-                logoBadgePadrao.classList.add('hidden');
-            } else {
-                tratarErroImagem();
-            }
+            indiceLogoAtual = 0;
+            logoImagem.src = URLs_LOGO[0];
+            logoImagem.classList.remove('hidden');
+            logoBadgePadrao.classList.add('hidden');
         }
 
         function tratarErroImagem() {
-            // Em caso de caminho não encontrado, exibe o selo tradicional FCI
-            logoImagem.classList.add('hidden');
-            logoBadgePadrao.classList.remove('hidden');
+            indiceLogoAtual++;
+            if (indiceLogoAtual < URLs_LOGO.length) {
+                logoImagem.src = URLs_LOGO[indiceLogoAtual];
+            } else {
+                logoImagem.classList.add('hidden');
+                logoBadgePadrao.classList.remove('hidden');
+            }
         }
 
         const displayTituloCertificado = document.getElementById('displayTituloCertificado');
         const displayPreambulo = document.getElementById('displayPreambulo');
         const displayNome = document.getElementById('displayNome');
         const displayTextoCorpo = document.getElementById('displayTextoCorpo');
-        const displayHorasTexto = document.getElementById('displayHorasTexto');
 
         const btnModParticipante = document.getElementById('btnModParticipante');
         const btnModPalestrante = document.getElementById('btnModPalestrante');
@@ -448,7 +363,6 @@
         function mudarModalidade(mod) {
             modalidadeAtual = mod;
             
-            // Atualiza botões
             [btnModParticipante, btnModPalestrante, btnModMonitor].forEach(btn => {
                 btn.className = "py-2 text-xs font-semibold rounded-md transition text-slate-600 hover:text-slate-900 hover:bg-slate-200/60";
             });
@@ -463,7 +377,7 @@
                 btnModPalestrante.className = "py-2 text-xs font-semibold rounded-md transition text-white bg-red-600 shadow-sm";
                 labelNome.innerText = "Nome completo do palestrante";
                 campoTituloPalestra.classList.remove('hidden');
-                campoCargaHoraria.classList.add('hidden');
+                campoCargaHoraria.classList.remove('hidden'); // Corrigido para não esconder na modalidade Palestrante
                 inputNome.placeholder = "Ex: André Cândido Ubriaco de Oliveira";
             } else if (mod === 'monitor') {
                 btnModMonitor.className = "py-2 text-xs font-semibold rounded-md transition text-white bg-red-600 shadow-sm";
@@ -492,7 +406,8 @@
                 displayPreambulo.innerText = "Certificamos que, para os devidos fins,";
                 displayNome.innerText = nome || "[Nome do Palestrante]";
                 const tituloFormatado = titulo ? `apresentando a palestra/comunicação intitulada <i>"${titulo}"</i>,` : `apresentando discussões e trabalhos acadêmicos,`;
-                displayTextoCorpo.innerHTML = `contribuiu como <b>palestrante</b> na <b>XIII Semana de Estudos da Faculdade Cultura Inglesa</b>, ${tituloFormatado} realizada entre <b>20 e 24 de outubro de 2026</b>.`;
+                // Adicionado a carga horária na frase final para palestrantes
+                displayTextoCorpo.innerHTML = `contribuiu como <b>palestrante</b> na <b>XIII Semana de Estudos da Faculdade Cultura Inglesa</b>, ${tituloFormatado} realizada entre <b>20 e 24 de outubro de 2026</b>, com carga horária total de <b>${horas} horas</b>.`;
             } else if (modalidadeAtual === 'monitor') {
                 displayTituloCertificado.innerText = "Certificado de Monitoria";
                 displayPreambulo.innerText = "Certificamos que, para os devidos fins, o(a) aluno(a)";
@@ -555,14 +470,12 @@
             gerar();
         }
 
-        // Fechar autocomplete ao clicar fora
         document.addEventListener('click', function(e) {
             if (!inputNome.contains(e.target) && !autocompleteList.contains(e.target)) {
                 autocompleteList.classList.add('hidden');
             }
         });
 
-        // Inicialização
         window.onload = function() {
             configurarLogoFixo();
             gerar();
