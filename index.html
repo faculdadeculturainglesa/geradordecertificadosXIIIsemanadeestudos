@@ -379,7 +379,7 @@
                 btnModPalestrante.className = "py-2 text-xs font-semibold rounded-md transition text-white bg-red-600 shadow-sm";
                 labelNome.innerText = "Nome completo do palestrante";
                 campoTituloPalestra.classList.remove('hidden');
-                campoCargaHoraria.classList.remove('hidden'); // O campo de carga horária agora fica visível para palestrantes
+                campoCargaHoraria.classList.remove('hidden');
                 inputNome.placeholder = "Ex: André Cândido Ubriaco de Oliveira";
             } else if (mod === 'monitor') {
                 btnModMonitor.className = "py-2 text-xs font-semibold rounded-md transition text-white bg-red-600 shadow-sm";
@@ -408,7 +408,6 @@
                 displayPreambulo.innerText = "Certificamos que, para os devidos fins,";
                 displayNome.innerText = nome || "[Nome do Palestrante]";
                 const tituloFormatado = titulo ? `apresentando a palestra/comunicação intitulada <i>"${titulo}"</i>,` : `apresentando discussões e trabalhos acadêmicos,`;
-                // Foi adicionado o texto com a carga horária na frase abaixo
                 displayTextoCorpo.innerHTML = `contribuiu como <b>palestrante</b> na <b>XIII Semana de Estudos da Faculdade Cultura Inglesa</b>, ${tituloFormatado} realizada entre <b>20 e 24 de outubro de 2026</b>, com carga horária total de <b>${horas} horas</b>.`;
             } else if (modalidadeAtual === 'monitor') {
                 displayTituloCertificado.innerText = "Certificado de Monitoria";
@@ -458,23 +457,3 @@
                 `).join('');
                 autocompleteList.classList.remove('hidden');
             }
-
-            gerar();
-        }
-
-        function selecionarSugestao(nome, extra) {
-            inputNome.value = nome;
-            if (modalidadeAtual === 'palestrante' && extra && extra !== "Inscrito FCI") {
-                inputTitulo.value = extra;
-            }
-            autocompleteList.classList.add('hidden');
-            autocompleteList.innerHTML = '';
-            gerar();
-        }
-
-        // Fechar a lista de sugestões ao clicar fora do campo
-        document.addEventListener('click', function(e) {
-            if (!inputNome.contains(e.target) && !autocompleteList.contains(e.target)) {
-                autocompleteList.classList.add('hidden');
-            }
-        });
